@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Document</title>
+  <script type="text/javascript" src="js/jquery-1.11.3.js"></script>
+  <!-- 这里面应该注意两个知识点，一个是offset().left ,另一个是position().left;第一个是相对于屏幕的位置第二个是相对于其父元素的位置。 -->
+  <style>
+    #list{
+      width: 1000px;
+      background: gray;
+      position: relative;
+      margin : 0 auto;
+    }
+    li{
+      list-style: none;
+      display: inline-block;
+    }
+   a{
+      text-decoration: none;
+      position:relative;
+      z-index:10;
+      display: block;
+      padding: 10px;
+    }
+    .bg{
+      background: red;
+      position:absolute;
+      top:0;
+      left:0;
+      width:0;
+      height: 40px;
+    }
+    .active{
+      background: red;
+    }
+  </style>
+  <script>
+    $(function(){
+      var active_left=$('#list .active').position().left;
+      $('#list .bg').css({
+        'left':active_left
+      })
+      $('#list li').mouseover(function(event) {
+        var curr_width=$(this).width();
+        var curr_left=$(this).position().left;
+      $('#list .bg').css({
+        'width':curr_width
+      })
+      $('#list .bg').stop().animate({
+        'left':curr_left
+      })
+      });
+      $('#list li').mouseleave(function(event) {
+        var curr_width=$(this).width();
+        var curr_left=$(this).position().left;
+        console.log(curr_left);
+      $('#list .bg').css({
+        'width':0
+      })
+      $('#list .bg').stop().animate({
+        'left':curr_width
+      })
+      });
+    })
+  </script>
+</head>
+<body>
+   <div id="top">
+     <ul id="list">
+       <li class="active"><a href="">新闻</a></li>
+       <li ><a href="">关于</a></li>
+       <li><a href="">时政热点</a></li>
+       <li><a href="">娱乐热点</a></li>
+       <li class="bg"></li>
+     </ul>
+   </div>
+</body>
+</html>
